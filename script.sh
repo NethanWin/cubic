@@ -22,3 +22,21 @@ sudo mount -t devpts /dev/pts tmp-fs/dev/pts
 sudo cp /etc/resolv.conf tmp-fs/etc/resolv.conf
 
 sudo chroot tmp-fs /bin/bash
+
+##########################
+#  add your changes here #
+##########################
+
+
+# existing to tmp-fs
+sudo umount tmp-fs/dev/pts
+sudo umount tmp-fs/dev
+sudo umount tmp-fs/proc
+sudo umount tmp-fs/sys
+sudo umount tmp-fs/run
+
+# rebuild squashfs
+sudo rm -f iso/casper/filesystem.squashfs
+
+sudo mksquashfs tmp-fs iso/casper/filesystem.squashfs -b 1048576 -comp xz -Xbcj x86
+
